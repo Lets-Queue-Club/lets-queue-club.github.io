@@ -10,13 +10,18 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "test:gas": "node --test tests/apps-script.test.mjs",
+    "preview": "vite preview",
+    "gas:push": "clasp push --force",
+    "gas:deploy": "node scripts/deploy-apps-script.mjs",
+    "gas:describe": "clasp run describeDatabaseStructure"
   },
   "dependencies": {
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@google/clasp": "^2.5.0",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

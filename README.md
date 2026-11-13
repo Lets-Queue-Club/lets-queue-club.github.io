@@ -48,7 +48,7 @@ HTML, CSS, and JavaScript, but cannot run Node.js or a backend.
   Any future browser-readable data endpoint must allow cross-origin requests.
 - **Apps Script:** The Google Apps Script source lives in
   [apps-script/](apps-script/). Vite doesn't build it and it isn't deployed;
-  copy changes into the Apps Script editor by hand (see its README).
+  it is pushed and deployed with clasp (`npm run gas:push`; see its README).
 
 ### Publishing
 
