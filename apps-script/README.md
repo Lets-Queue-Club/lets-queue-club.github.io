@@ -19,6 +19,7 @@ Run from the repository root:
 | `npm run gas:deploy -- "<description>"` | Pushes, then publishes a new version to the live Web App deployment, keeping its URL. The description is optional; it defaults to a timestamp. |
 | `npm run gas:push` | Replaces the Apps Script project's files and manifest with this folder, without changing the live Web App. Edits made only in the online editor are overwritten. |
 | `npm run gas:describe` | Runs `describeDatabaseStructure` and prints the tables and columns as JSON. Runs the latest pushed code. |
+| `npm run gas:champions` | Runs `refreshChampions` to sync the `Champions` table with the latest Data Dragon release. Requires `clasp run` access, like `gas:describe`. |
 | `npm run test:gas` | Tests the public endpoint locally using mocked Google services; does not read or change the live sheet. |
 
 The live Web App is
@@ -70,9 +71,13 @@ add a script property named `SPREADSHEET_ID` containing the sheet's ID (from its
 ## Files
 
 - [appsscript.json](appsscript.json): manifest. Enables the Sheets advanced
-  service (needed to read tables), requests spreadsheet access, makes the Web
-  App public and anonymous, and allows only you to run functions through the API.
+  service (needed to read tables), requests spreadsheet access and external
+  requests (to download import files), makes the Web App public and anonymous,
+  and allows only you to run functions through the API.
+- [Champions.js](Champions.js): `refreshChampions` syncs the `Champions` table
+  from Data Dragon. See [Refreshing champions](#refreshing-champions).
 - [Code.js](Code.js): `doGet` Web App endpoint returning structured tables as JSON.
+- [Import.js](Import.js): season importers. See [Importing season data](#importing-season-data).
 - [Tools.js](Tools.js): `describeDatabaseStructure` returns every structured
   table's name, sheet, range, data row count, and column names and types,
   including allowed dropdown values. It never reads cell values. It also lists
@@ -123,10 +128,68 @@ This is an exclusion list, not a private-data allowlist.
 
 ### Table growth
 
-Prefer tables sized to their actual records; future import code should expand
-their table ranges as it appends data. Reserved blank rows also work, since the
+Prefer tables sized to their actual records. The importer appends with the
+Sheets API's table-aware `appendCells`, which fills a table's reserved blank rows
+first and then grows the table. Reserved blank rows also work, since the
 endpoint skips them, but make capacity counts less useful and can increase the
 amount of data scanned. No existing ranges are resized by this endpoint.
+
+## Importing season data
+
+[Import.js](Import.js) downloads a season JSON file, generated in this repo,
+from GitHub at run time. The data isn't bundled into the script project, so
+`clasp push` stays small. The importer only reads `format`, `formatVersion`,
+`season`, `tableColumns`, and `tables`.
+
+1. Commit and push the JSON (for example `data/season-2/season-2.json`) to
+   `main`. The importer reads it from `raw.githubusercontent.com`.
+2. Run `npm run gas:push`. Then, in the Apps Script editor, run
+   `previewSeason2Import`. The first run asks you to allow "Connect to an
+   external service". The preview writes nothing. It logs, for each table, how
+   many rows the file has, how many are new, and how many already exist.
+3. Run `importSeason2` to append the new rows.
+
+Behavior:
+
+- Tables and columns are matched by name, so column order in the sheet doesn't
+  matter. Sheet columns missing from the file are left blank. If a table or
+  column the file needs is missing, the import stops with an error before
+  anything is written. For example, `MatchParticipants` needs its placeholder
+  columns renamed first: `Column 1`–`Column 11` become Game ID, Team ID, PUUID,
+  Champion, Position, Kills, Deaths, Assists, CS, Damage, Gold (in that order).
+  The file has no data for `Column 12`–`Column 14`, so delete them; if kept,
+  they stay blank.
+- Rows whose key already exists are skipped, so re-running is safe and shared
+  data such as `Champions` isn't duplicated. Keys are defined in
+  `IMPORT_TABLE_KEYS`: `Teams.ID`, `Players.PUUID`, `Matches` Game ID,
+  `MatchTeams` Game ID + Team ID, `MatchParticipants` Game ID + PUUID, and
+  `Champions.ID`. Existing rows are never updated.
+- All tables are written in one atomic `batchUpdate`: either every table is
+  appended or none is. Numbers are written as numbers. Text is written as
+  literal text, so a tagline like `0001` stays text. `""` leaves a cell blank.
+- A script lock prevents two imports from running at once.
+
+For another season, add a function like `importSeason2` pointing at that
+season's file.
+
+## Refreshing champions
+
+Champion picks (`MatchParticipants.Champion`) and bans (`MatchTeams` Ban 1–5)
+are stored as numeric Riot champion IDs, which are Data Dragon's `key` values
+(for example `1` = Annie). The `Champions` table maps those IDs to names.
+
+To keep the table current, run these in the Apps Script editor (or with
+`npm run gas:champions`):
+
+1. `previewChampionsRefresh`: logs what would change, without writing.
+2. `refreshChampions`: downloads the latest Data Dragon champion list,
+   appends new IDs, and updates names that changed. Both happen in one
+   atomic `batchUpdate`.
+
+Rows are never deleted, so IDs from old matches always resolve. Running it
+again with nothing new does nothing. It's safe to run before or after a
+season import, because the importer skips existing `Champions.ID` values.
+Use it after each new champion release.
 
 ## Database structure
 
@@ -153,6 +216,9 @@ Tabs without tables: `Schema Plan`, `Constants`.
 Table IDs (stable even if a table is renamed): `Teams` 147166511, `Players`
 1426353351, `Matches` 645528010, `MatchTeams` 856360441, `MatchParticipants`
 148750668, `Champions` 1718741196.
+
+Season 2 data, converted to this schema, lives in
+[`data/season-2/`](../data/season-2/README.md).
 
 ## Security
 

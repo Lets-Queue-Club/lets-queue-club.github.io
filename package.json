@@ -14,7 +14,9 @@
     "preview": "vite preview",
     "gas:push": "clasp push --force",
     "gas:deploy": "node scripts/deploy-apps-script.mjs",
-    "gas:describe": "clasp run describeDatabaseStructure"
+    "gas:describe": "clasp run describeDatabaseStructure",
+    "gas:champions": "clasp run refreshChampions",
+    "data:season-2": "node scripts/build-season-2-data.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",

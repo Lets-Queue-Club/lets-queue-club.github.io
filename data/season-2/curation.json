@@ -1,0 +1,180 @@
+{
+  "source": {
+    "name": "Let's Queue Club Season 2 spreadsheet",
+    "spreadsheetId": "1lJwH6ZA0KaB0wOxUEnEIyawmz7u55db6Wh0n4F9tVwQ",
+    "url": "https://docs.google.com/spreadsheets/d/1lJwH6ZA0KaB0wOxUEnEIyawmz7u55db6Wh0n4F9tVwQ/edit",
+    "snapshotDate": "2026-11-14",
+    "snapshotFiles": "data/season-2/source/",
+    "tabsUsed": ["Standings", "Schedule", "Rosters", "OP.GG", "Player Stats", "Team Stats", "Broadcasting"],
+    "tabsSkipped": {
+      "Club Leaders": "Derived from Player Stats",
+      "Records": "Derived pick/ban/record aggregates"
+    }
+  },
+  "extraTeams": [
+    {
+      "number": 7,
+      "name": "Team Infinity",
+      "note": "Missing from the Rosters and OP.GG tabs. Number 7 is the gap in roster numbering and matches the Player Stats leaderboard label T7."
+    },
+    {
+      "number": 39,
+      "name": "Team 39",
+      "note": "Schedule placeholder with no roster or stats."
+    },
+    {
+      "number": 40,
+      "name": "Team 40",
+      "note": "Schedule placeholder with no roster. Its week 2 game vs Hit The Nexus has stats only on Hit The Nexus's side."
+    },
+    {
+      "number": 41,
+      "name": "23 & Me",
+      "note": "Appears only as an opponent (weeks 1–2) with no roster or stats of its own. May be the same team as a schedule placeholder."
+    }
+  ],
+  "teamAliases": {
+    "25 to Life": "25 To LIfe",
+    "Nexus & Chill": "Nexus And Chill",
+    "Nexsus & Chill": "Nexus And Chill",
+    "TeeWees Favorites": "TeeWee's Favorites",
+    "TeeWee's Favorite": "TeeWee's Favorites",
+    "Cused Objects": "Cursed Objects",
+    "X9 Challender": "X9 Challenger",
+    "X9 academie": "X9 Academy",
+    "Needlesly Large Rods": "Needlessly Large Rods",
+    "Certified Greifing Intent": "Certified Griefing Intent",
+    "Certified Griefing Inten": "Certified Griefing Intent",
+    "Saints Sensation Nation of Hextech Smugglers": "Hextech Smugglers",
+    "Hextech Smuggler": "Hextech Smugglers",
+    "Hextech": "Hextech Smugglers",
+    "All Day Diffts": "All Day Diffy",
+    "Orion Vanduard": "Orion Vanguard",
+    "Orion's Vanguard": "Orion Vanguard",
+    "First Bloods Donors": "First Blood Donors",
+    "First Blood Donor": "First Blood Donors",
+    "Coin Fip Gaming": "Coin Flip Gaming",
+    "American World Police": "America World Police",
+    "Fallen Stars": "The Fallen Stars",
+    "Freijlord Femme Fatale": "Freljordian Femme Fatales",
+    "Happy Go Getter": "Happy Go Getters",
+    "Soul Fighers": "Soul Fighters"
+  },
+  "statRowOpponents": [
+    {
+      "source": "Player Stats!A103",
+      "opponent": "First Blood Donors",
+      "reason": "Beef Taco Special's week 2 row is labeled \"Team 39\". The schedule pairs Beef Taco Special with First Blood Donors that week, and First Blood Donors' row vs Beef Taco Special has the same 37:07 game time."
+    },
+    {
+      "source": "Team Stats!A84",
+      "opponent": "First Blood Donors",
+      "reason": "Beef Taco Special's week 2 row is labeled \"Team 39\". The schedule pairs Beef Taco Special with First Blood Donors that week, and First Blood Donors' row vs Beef Taco Special has the same 37:07 game time."
+    },
+    {
+      "source": "Team Stats!A96",
+      "opponent": "Pee Wee",
+      "reason": "The \"Force win\" row in Certified Griefing Intent's block is their week 5 forfeit win over Pee Wee (Pee Wee's rows say \"L FF\" vs Certified Griefing Intent)."
+    }
+  ],
+  "broadcastWeek": 6,
+  "resultOverrides": [
+    {
+      "match": "S2-W3-M15",
+      "sourceText": "Nexus & Chill vs Soul Fighters",
+      "winner": "Soul Fighters",
+      "reason": "Schedule has no winner. The Standings tab is short exactly this result for both teams (Nexus And Chill 2-5, Soul Fighters 5-2), so Soul Fighters won."
+    }
+  ],
+  "broadcastOverrides": [
+    {
+      "source": "Trash vs Soul Reapers",
+      "match": "EBoys vs Soul Reapers",
+      "reason": "Trash already has a week 6 broadcast row (vs Freljordian Femme Fatales); this row's position matches the schedule's EBoys vs Soul Reapers."
+    }
+  ],
+  "gameTimeOverrides": {
+    "27:!4": "27:14",
+    "26.06": "26:06",
+    "50:04:00": "50:04"
+  },
+  "unidentifiedPlayerLabels": ["Former team member", "Former Player", "Clown Player"],
+  "playerAliases": {
+    "X9 L3MON": "LemonPepperWinqs#ROCK",
+    "ASB pappydoodle#DUB": "X9 PappT#bad",
+    "Beastlysparky#fdc": "X9 Beastysparky#FDC",
+    "X9 Shrimp#Supp": "DLR Shrimp#Easy",
+    "Arrowsz#7521": "Arrowz#7521",
+    "hellp": "heIIp#000",
+    "Int Rad DO": "Int Rat DO",
+    "intraddo": "Int Rat DO",
+    "Dynamatrix34 #1034": "Dynamatrix#1034",
+    "N8teTerminator": "NaterTerminater8#NA1",
+    "MayerBells": "Mayorbells",
+    "Mayorbells - sup, Nate moved to Jungle": "Mayorbells",
+    "I Drift I": "l Drift l#NA1",
+    "Riptide top lane sub": "Riptide",
+    "PappuSnuSnu": "PappySnuSnu#8085",
+    "VaranTheArchamge": "VaranTheArchmage#NA1",
+    "IntocixanAero": "IntoxicantAero#DINK",
+    "NINGMING": "NINGNING#SELLE",
+    "Sinply Ref #NA1": "Simply Ref#NA1",
+    "BLOODCLAW70#meme": "BLOODCLAW71#MEME",
+    "Andyhillft": "andyhilltft",
+    "much #002": "mich#002",
+    "Nayr4628": "nayr#talon",
+    "Paul Soccer": "paulsoccer52#222",
+    "TP Gaurdian": "TPGuardian#2910",
+    "Tundrus": "TundrusSwiftTTV#Tundo",
+    "Spyro": "Panda Spyro#GtMLK",
+    "Spyro#GtMlk": "Panda Spyro#GtMLK",
+    "Panda Jester": "Jester#1181",
+    "Anemitii": "Anemetii#WASHD",
+    "oxsaphire": "oxSapphirexo#NA1",
+    "Battlegnome#l7vdc": "BattleGnome#VDCL7"
+  },
+  "championAliases": {
+    "MF": "Miss Fortune",
+    "J4": "Jarvan IV",
+    "Jarvan": "Jarvan IV",
+    "Cho": "Cho'Gath",
+    "Malz": "Malzahar",
+    "Sera": "Seraphine",
+    "Lee": "Lee Sin",
+    "Oriana": "Orianna",
+    "Tryndamire": "Tryndamere",
+    "Millio": "Milio",
+    "Maser Yi": "Master Yi",
+    "Yi": "Master Yi",
+    "Kennan": "Kennen",
+    "Maoki": "Maokai",
+    "Aurelion So": "Aurelion Sol",
+    "Caitlin": "Caitlyn",
+    "Ashes": "Ashe",
+    "Zileean": "Zilean",
+    "Sydnra": "Syndra",
+    "Nafaari": "Naafiri",
+    "Vladamir": "Vladimir",
+    "Naut": "Nautilus",
+    "Ilaoi": "Illaoi",
+    "Qiyanna": "Qiyana",
+    "Mundo": "Dr. Mundo",
+    "Nunu": "Nunu & Willump",
+    "Quin": "Quinn",
+    "Cait": "Caitlyn",
+    "Ahir": "Ahri",
+    "Nafiri": "Naafiri",
+    "Poopy": "Poppy",
+    "Lilia": "Lillia",
+    "Malhazar": "Malzahar",
+    "Vez": "Vex",
+    "Nocturn": "Nocturne",
+    "Jhinn": "Jhin",
+    "Jihn": "Jhin",
+    "Shyvanna": "Shyvana",
+    "Fiddelstick": "Fiddlesticks",
+    "Alistair": "Alistar",
+    "Heim": "Heimerdinger",
+    "Voli": "Volibear"
+  }
+}
