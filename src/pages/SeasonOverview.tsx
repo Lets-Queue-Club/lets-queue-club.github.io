@@ -40,12 +40,12 @@ export function SeasonOverview({ season }: { season: Season }) {
       </StatGrid>
 
       <div className="dashboard">
-        <Panel title="Standings" action={<a className="text-link" href={paths.season(season.key, 'standings')}>Full table →</a>} className="span-2">
+        <Panel title="Standings" action={<a className="text-link" href={paths.season(season.key, 'teams')}>All teams →</a>} className="span-2">
           <ol className="mini-standings">
             {season.teams.slice(0, 8).map((team) => (
               <li key={team.id}>
                 <span className="mini-rank">{team.rank}</span>
-                <TeamLink team={team} size={26} />
+                <TeamLink team={team} />
                 <FormDots form={team.form} />
                 <span className="mini-record">{formatRecord(team.wins, team.losses)}</span>
               </li>

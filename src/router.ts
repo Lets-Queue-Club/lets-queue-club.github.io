@@ -5,7 +5,7 @@ import { useMemo, useSyncExternalStore } from 'react'
  * hash URLs are the only ones that survive a refresh or a shared link.
  */
 
-export const SEASON_VIEWS = ['overview', 'standings', 'matches', 'teams', 'players', 'champions', 'records'] as const
+export const SEASON_VIEWS = ['overview', 'matches', 'teams', 'players', 'champions', 'records'] as const
 export type SeasonView = (typeof SEASON_VIEWS)[number]
 
 const DETAIL_PAGES = { matches: 'match', teams: 'team', players: 'player', champions: 'champion' } as const
@@ -31,7 +31,9 @@ export function parseRoute(hash: string): Route {
     })
   if (parts.length === 0) return { page: 'home' }
   if (parts[0] !== 'seasons' || !parts[1]) return { page: 'notFound' }
-  const [, season, view = 'overview', id, ...rest] = parts
+  const [, season, requested = 'overview', id, ...rest] = parts
+  // Standings were folded into the teams page; keep old links working.
+  const view = requested === 'standings' && id === undefined ? 'teams' : requested
   if (rest.length > 0 || !(SEASON_VIEWS as readonly string[]).includes(view)) return { page: 'notFound' }
   if (id === undefined) return { page: 'season', season, view: view as SeasonView }
   const page = DETAIL_PAGES[view as keyof typeof DETAIL_PAGES]

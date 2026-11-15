@@ -1,6 +1,6 @@
 import { SplitBar } from '../components/Charts.tsx'
 import { DataTable, type Column } from '../components/DataTable.tsx'
-import { ChampionIcon, ChampionLink, PlayerLink, TeamLink, TeamMark } from '../components/Entities.tsx'
+import { ChampionIcon, ChampionLink, PlayerLink, TeamLink } from '../components/Entities.tsx'
 import { Badge, EmptyState, Panel } from '../components/Layout.tsx'
 import type { Match, Participant, Side } from '../data/model.ts'
 import { formatCompact, formatDate, formatDuration, formatNumber, formatPercent, positionLabel, roundLabel } from '../format.ts'
@@ -82,8 +82,7 @@ function Bans({ side, season }: { side: Side; season: string }) {
 function ScoreSide({ side }: { side: Side }) {
   return (
     <div className={`score-side ${side.side} ${side.won ? 'won' : side.won === false ? 'lost' : ''}`}>
-      <TeamMark team={side.team} size={64} />
-      <TeamLink team={side.team} mark={false} />
+      <TeamLink team={side.team} />
       <span className="score-side-label">{side.side === 'blue' ? 'Blue side' : 'Red side'}</span>
       {side.won !== null && <Badge tone={side.won ? 'win' : 'loss'}>{side.won ? 'Victory' : 'Defeat'}</Badge>}
     </div>

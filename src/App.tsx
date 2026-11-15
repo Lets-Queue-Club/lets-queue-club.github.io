@@ -13,14 +13,12 @@ import { PlayerDetail } from './pages/PlayerDetail.tsx'
 import { PlayersPage } from './pages/PlayersPage.tsx'
 import { RecordsPage } from './pages/RecordsPage.tsx'
 import { SeasonOverview } from './pages/SeasonOverview.tsx'
-import { StandingsPage } from './pages/StandingsPage.tsx'
 import { TeamDetail } from './pages/TeamDetail.tsx'
 import { TeamsPage } from './pages/TeamsPage.tsx'
 import { navigate, paths, useRoute, type Route, type SeasonView } from './router.ts'
 
 const NAV: { view: SeasonView; label: string }[] = [
   { view: 'overview', label: 'Overview' },
-  { view: 'standings', label: 'Standings' },
   { view: 'matches', label: 'Matches' },
   { view: 'teams', label: 'Teams' },
   { view: 'players', label: 'Players' },
@@ -184,7 +182,6 @@ function Content({ route, league, season }: { route: Route; league: League | nul
   if (route.page === 'season') {
     const views: Record<SeasonView, () => ReactNode> = {
       overview: () => <SeasonOverview season={season} />,
-      standings: () => <StandingsPage season={season} />,
       matches: () => <MatchesPage season={season} />,
       teams: () => <TeamsPage season={season} />,
       players: () => <PlayersPage season={season} />,

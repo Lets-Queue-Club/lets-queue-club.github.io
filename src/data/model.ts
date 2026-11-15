@@ -155,6 +155,8 @@ export interface Team {
   red: WinLoss
   kills: Total
   deaths: Total
+  /** Team gold per game, summed from participants. */
+  gold: Total
   towers: Total
   dragons: Total
   voidGrubs: Total
@@ -453,6 +455,7 @@ export function buildLeague(database: Database): League {
     red: { wins: 0, losses: 0 },
     kills: newTotal(),
     deaths: newTotal(),
+    gold: newTotal(),
     towers: newTotal(),
     dragons: newTotal(),
     voidGrubs: newTotal(),
@@ -675,6 +678,8 @@ function buildSeason(key: string, teams: Team[], matches: Match[], championName:
         bansAgainst.push(...(side.opponent.stats?.bans ?? []))
       }
       if (match.hasData) addTo(team.duration, match.duration)
+      const golds = side.participants.map((p) => p.gold).filter((gold): gold is number => gold !== null)
+      if (golds.length > 0) addTo(team.gold, golds.reduce((sum, gold) => sum + gold, 0))
       pickRows.push(...side.participants)
     }
     team.games = team.wins + team.losses

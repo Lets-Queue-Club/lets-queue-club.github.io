@@ -119,14 +119,14 @@ export function RecordsPage({ season }: { season: Season }) {
             title="Most team kills"
             entries={top(sides, (side) => side.stats?.kills ?? null)}
             format={integer}
-            render={(side) => <span><TeamLink team={side.team} size={22} /> <span className="muted small">vs {side.opponent.team.name}</span></span>}
+            render={(side) => <span><TeamLink team={side.team} /> <span className="muted small">vs {side.opponent.team.name}</span></span>}
             link={(side) => matchLink(side.match)}
           />
           <RecordCard
             title="Most dragons"
             entries={top(sides, (side) => side.stats?.dragons ?? null)}
             format={integer}
-            render={(side) => <span><TeamLink team={side.team} size={22} /> <span className="muted small">vs {side.opponent.team.name}</span></span>}
+            render={(side) => <span><TeamLink team={side.team} /> <span className="muted small">vs {side.opponent.team.name}</span></span>}
             link={(side) => matchLink(side.match)}
           />
         </div>

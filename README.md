@@ -1,8 +1,9 @@
 # Let's Queue Club
 
-A React + TypeScript site built with Vite and hosted on GitHub Pages. It shows
-standings, matches, teams, players, champions, and records for every Let's Queue
-Club season, read live from the club's Google Sheet.
+A React + TypeScript site built with Vite and hosted on GitHub Pages. Its landing
+page introduces the club, and season pages show matches, teams, players,
+champions, and records for every Let's Queue Club season, read live from the
+club's Google Sheet.
 
 ## Local development
 
@@ -29,8 +30,10 @@ npm run dev
   prefix land in an "Other" season. Game IDs starting with `FORFEIT-` are
   forfeits: they count in standings but not in game stats.
 - Every view is grouped by season first: `#/seasons/<n>/` has overview,
-  standings, matches, teams, players, champions, and records pages, plus detail
-  pages for a match, team, player, or champion.
+  matches, teams (which include the standings), players, champions, and records
+  pages, plus detail pages for a match, team, player, or champion.
+- The landing page's next-season date, signup link, and events come from
+  [src/club.ts](src/club.ts); edit that file to fill them in.
 - Responses are cached in `localStorage` and shown immediately on the next visit
   while fresh data loads. Champion names and art come from Riot's public Data
   Dragon CDN.
@@ -59,8 +62,8 @@ HTML, CSS, and JavaScript, but cannot run Node.js or a backend.
   environment. The artifact workflow bypasses Jekyll, so no `gh-pages` branch or
   `.nojekyll` file is necessary.
 - **Navigation:** Pages has no SPA rewrite rule, so refreshing a nested path
-  such as `/standings` would return 404. The site uses hash routing instead
-  (`/#/seasons/2/standings`), which keeps every deep link refreshable and
+  such as `/seasons/2/teams` would return 404. The site uses hash routing instead
+  (`/#/seasons/2/teams`), which keeps every deep link refreshable and
   shareable.
 - **Data:** The site reads the Google Sheet through the public Apps Script web
   app, which returns every structured table as JSON with cross-origin access

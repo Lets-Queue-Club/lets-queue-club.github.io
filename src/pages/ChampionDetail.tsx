@@ -19,7 +19,7 @@ export function ChampionDetail({ season, champion }: { season: Season; champion:
   const gameColumns: Column<Participant>[] = [
     { key: 'round', label: 'Week', render: (p) => roundLabel(p.match.round), sort: (p) => p.match.round },
     { key: 'player', label: 'Player', render: (p) => <PlayerLink season={season.key} player={p.player} />, sort: (p) => p.player.name.toLowerCase(), className: 'col-primary' },
-    { key: 'team', label: 'Team', render: (p) => <TeamLink team={p.side.team} size={22} />, sort: (p) => p.side.team.name },
+    { key: 'team', label: 'Team', render: (p) => <TeamLink team={p.side.team} />, sort: (p) => p.side.team.name },
     { key: 'role', label: 'Role', render: (p) => positionLabel(p.position), sort: (p) => p.position },
     {
       key: 'result',
@@ -27,7 +27,7 @@ export function ChampionDetail({ season, champion }: { season: Season; champion:
       render: (p) => (p.won === null ? '—' : <span className={p.won ? 'text-win' : 'text-loss'}>{p.won ? 'Win' : 'Loss'}</span>),
       sort: (p) => (p.won === null ? null : Number(p.won)),
     },
-    { key: 'opponent', label: 'Opponent', render: (p) => <TeamLink team={p.side.opponent.team} size={22} />, sort: (p) => p.side.opponent.team.name },
+    { key: 'opponent', label: 'Opponent', render: (p) => <TeamLink team={p.side.opponent.team} />, sort: (p) => p.side.opponent.team.name },
     { key: 'kda', label: 'K / D / A', align: 'center', render: (p) => `${p.kills ?? '—'} / ${p.deaths ?? '—'} / ${p.assists ?? '—'}` },
     { key: 'damage', label: 'Damage', align: 'end', render: (p) => formatCompact(p.damage), sort: (p) => p.damage },
     { key: 'link', label: <span className="visually-hidden">Match</span>, render: (p) => <a className="text-link" href={paths.match(p.match.seasonKey, p.match.id)}>Match →</a> },

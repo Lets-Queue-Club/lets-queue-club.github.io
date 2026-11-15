@@ -15,8 +15,22 @@ const kdaLine = (row: ParticipantTotals) =>
     ? `${formatNumber(average(row.kills), 1)} / ${formatNumber(average(row.deaths), 1)} / ${formatNumber(average(row.assists), 1)}`
     : '—'
 
+interface PlayerColumnOptions {
+  team?: boolean
+  position?: boolean
+  /** Include the W–L and win-rate columns. */
+  record?: boolean
+  /** Decimal places for DMG/m and Gold/m. */
+  rateDigits?: number
+  championCount?: number
+  championSize?: number
+}
+
 /** Standard player stat columns, shared by every player table. */
-export function playerColumns(season: string, { team = true, position = true } = {}): Column<PlayerRow>[] {
+export function playerColumns(
+  season: string,
+  { team = true, position = true, record = true, rateDigits = 0, championCount = 3, championSize = 24 }: PlayerColumnOptions = {},
+): Column<PlayerRow>[] {
   const columns: Column<PlayerRow>[] = [
     {
       key: 'player',
@@ -30,46 +44,50 @@ export function playerColumns(season: string, { team = true, position = true } =
     columns.push({
       key: 'team',
       label: 'Team',
-      render: (row) => (row.primaryTeam ? <TeamLink team={row.primaryTeam} size={22} /> : '—'),
+      render: (row) => (row.primaryTeam ? <TeamLink team={row.primaryTeam} /> : '—'),
       sort: (row) => row.primaryTeam?.name ?? null,
     })
   }
   if (position) {
     columns.push({ key: 'position', label: 'Role', render: (row) => positionLabel(row.mainPosition), sort: (row) => row.mainPosition })
   }
+  columns.push({ key: 'games', label: 'GP', title: 'Games played', align: 'end', render: (row) => row.games, sort: (row) => row.games })
+  if (record) {
+    columns.push(
+      {
+        key: 'record',
+        label: 'W–L',
+        align: 'end',
+        render: (row) => formatRecord(row.wins, row.losses),
+        sort: (row) => row.wins - row.losses,
+      },
+      {
+        key: 'winRate',
+        label: 'Win rate',
+        render: (row) => (row.wins + row.losses ? <WinRateBar wins={row.wins} losses={row.losses} /> : '—'),
+        sort: (row) => row.winRate,
+        descending: true,
+      },
+    )
+  }
   columns.push(
-    { key: 'games', label: 'GP', title: 'Games played', align: 'end', render: (row) => row.games, sort: (row) => row.games },
-    {
-      key: 'record',
-      label: 'W–L',
-      align: 'end',
-      render: (row) => formatRecord(row.wins, row.losses),
-      sort: (row) => row.wins - row.losses,
-    },
-    {
-      key: 'winRate',
-      label: 'Win rate',
-      render: (row) => (row.wins + row.losses ? <WinRateBar wins={row.wins} losses={row.losses} /> : '—'),
-      sort: (row) => row.winRate,
-      descending: true,
-    },
     { key: 'kda-line', label: 'K / D / A', title: 'Average kills, deaths and assists per game', align: 'end', render: kdaLine },
     { key: 'kda', label: 'KDA', title: '(Kills + Assists) ÷ Deaths', align: 'end', render: (row) => formatNumber(row.kda, 2), sort: (row) => row.kda },
     { key: 'kp', label: 'KP', title: 'Kill participation: share of team kills with a kill or assist', align: 'end', render: (row) => formatPercent(row.killParticipation), sort: (row) => row.killParticipation },
     { key: 'cspm', label: 'CS/m', title: 'Creep score per minute', align: 'end', render: (row) => formatNumber(row.csPerMin, 1), sort: (row) => row.csPerMin },
-    { key: 'dpm', label: 'DMG/m', title: 'Damage to champions per minute', align: 'end', render: (row) => formatNumber(row.damagePerMin), sort: (row) => row.damagePerMin },
-    { key: 'gpm', label: 'Gold/m', title: 'Gold earned per minute', align: 'end', render: (row) => formatNumber(row.goldPerMin), sort: (row) => row.goldPerMin },
+    { key: 'dpm', label: 'DMG/m', title: 'Damage to champions per minute', align: 'end', render: (row) => formatNumber(row.damagePerMin, rateDigits), sort: (row) => row.damagePerMin },
+    { key: 'gpm', label: 'Gold/m', title: 'Gold earned per minute', align: 'end', render: (row) => formatNumber(row.goldPerMin, rateDigits), sort: (row) => row.goldPerMin },
     {
       key: 'champions',
       label: 'Champions',
       render: (row) => (
         <span className="icon-row">
-          {row.champions.slice(0, 3).map((usage) => (
+          {row.champions.slice(0, championCount).map((usage) => (
             <a key={usage.championId} href={paths.champion(season, usage.championId)} title={`${usage.games} games`}>
-              <ChampionIcon id={usage.championId} size={24} />
+              <ChampionIcon id={usage.championId} size={championSize} />
             </a>
           ))}
-          {row.champions.length > 3 && <span className="muted small">+{row.champions.length - 3}</span>}
+          {row.champions.length > championCount && <span className="muted small">+{row.champions.length - championCount}</span>}
         </span>
       ),
       sort: (row) => row.champions.length,

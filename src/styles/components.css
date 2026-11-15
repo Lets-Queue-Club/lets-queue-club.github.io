@@ -51,25 +51,6 @@ a.entity:hover .entity-name {
   box-shadow: 0 0 0 4px rgb(200 170 110 / 12%), 0 10px 30px rgb(0 0 0 / 50%);
 }
 
-.team-mark {
-  display: inline-grid;
-  flex: none;
-  place-items: center;
-  border: 1px solid var(--gold-dark);
-  border-radius: 22%;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: var(--text);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%);
-}
-
-.team-mark.tone-0 { background: linear-gradient(145deg, #1d4d3a, #0b2018); color: #c9f2d9; }
-.team-mark.tone-1 { background: linear-gradient(145deg, #1c3a66, #0a1428); color: #cfe0ff; }
-.team-mark.tone-2 { background: linear-gradient(145deg, #6a4b1d, #2a1d08); color: var(--gold-bright); }
-.team-mark.tone-3 { background: linear-gradient(145deg, #1c5257, #0a2023); color: #c4f3f0; }
-.team-mark.tone-4 { background: linear-gradient(145deg, #4a2a4f, #1b0f1e); color: #f0d9f3; }
-
 .icon-row {
   display: inline-flex;
   align-items: center;
@@ -579,11 +560,6 @@ a.entity:hover .entity-name {
 .match-side.lost .match-team-name,
 .match-side.lost .match-kills {
   color: var(--muted);
-}
-
-.match-side.lost .team-mark {
-  filter: grayscale(0.7);
-  opacity: 0.7;
 }
 
 .match-win-tag {

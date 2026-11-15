@@ -28,35 +28,9 @@ export function ChampionLink({ season, id, size = 28, showName = true }: { seaso
   )
 }
 
-function initials(name: string): string {
-  const words = name.replace(/[^\p{L}\p{N}\s&]/gu, '').split(/\s+/).filter((word) => word && word !== '&')
-  if (words.length === 0) return '?'
-  if (words.length === 1) return words[0].slice(0, 2).toUpperCase()
-  return (words[0][0] + words[1][0]).toUpperCase()
-}
-
-function hash(text: string): number {
-  let value = 0
-  for (const character of text) value = (value * 31 + character.charCodeAt(0)) >>> 0
-  return value
-}
-
-export function TeamMark({ team, size = 36 }: { team: Team; size?: number }) {
-  return (
-    <span
-      className={`team-mark tone-${hash(team.id) % 5}`}
-      style={{ width: size, height: size, fontSize: size * 0.36 }}
-      aria-hidden="true"
-    >
-      {initials(team.name)}
-    </span>
-  )
-}
-
-export function TeamLink({ team, mark = true, size = 28, children }: { team: Team; mark?: boolean; size?: number; children?: ReactNode }) {
+export function TeamLink({ team, children }: { team: Team; children?: ReactNode }) {
   return (
     <a className="entity" href={paths.team(team.seasonKey, team.id)}>
-      {mark && <TeamMark team={team} size={size} />}
       <span className="entity-name">{children ?? team.name}</span>
     </a>
   )

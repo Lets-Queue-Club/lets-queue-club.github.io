@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
+import { daysUntil } from '../src/club.ts'
 import { buildLeague } from '../src/data/model.ts'
 import type { Database } from '../src/data/types.ts'
 
@@ -33,7 +34,7 @@ const database: Database = {
     { 'Game ID': 'G1', 'Team ID': 'S1-T02', 'Ban 1': 12, Kills: 4 },
   ],
   MatchParticipants: [
-    { 'Game ID': 'G1', 'Team ID': 'S1-T01', PUUID: 'p1', Champion: 10, Position: 'middle', Kills: 6, Deaths: 1, Assists: 3 },
+    { 'Game ID': 'G1', 'Team ID': 'S1-T01', PUUID: 'p1', Champion: 10, Position: 'middle', Kills: 6, Deaths: 1, Assists: 3, Gold: 12000 },
     { 'Game ID': 'G1', 'Team ID': 'S1-T02', PUUID: 'p2', Champion: 11, Position: 'TOP', Kills: 2, Deaths: 6, Assists: 1 },
     { 'Game ID': 'G3', 'Team ID': 'S2-T01', PUUID: 'p9', Champion: 10, Position: 'MIDDLE', Kills: 0, Deaths: 3, Assists: 0 },
   ],
@@ -90,4 +91,17 @@ test('keeps unlinked rows visible and reports them as issues', () => {
   assert.equal(delta.roster.find((slot) => slot.sub)?.player.name, 'Four')
   assert.equal(league.season('2')!.playerSeason('p9')?.player.name, 'Unknown player')
   assert.ok(league.issues.some((issue) => issue.includes('p9')))
+})
+
+test('totals team gold per game from participants, skipping games without data', () => {
+  const alpha = buildLeague(database).season('1')!.team('S1-T01')!
+  assert.deepEqual([alpha.gold.sum, alpha.gold.count], [12000, 1])
+})
+
+test('counts whole days until a date-only season start in local time', () => {
+  const now = new Date(2026, 0, 1, 18, 30).getTime()
+  assert.equal(daysUntil('2026-01-01', now), 0)
+  assert.equal(daysUntil('2026-01-11', now), 10)
+  assert.equal(daysUntil('2025-12-31', now), null)
+  assert.equal(daysUntil(null, now), null)
 })

@@ -1,28 +1,26 @@
-import { TeamMark } from '../components/Entities.tsx'
-import { FormDots } from '../components/Charts.tsx'
-import { MatchCard } from '../components/MatchCard.tsx'
+import { useState } from 'react'
+import { CLUB, daysUntil, parseClubDate, upcomingEvents } from '../club.ts'
 import { Section } from '../components/Layout.tsx'
 import { useData } from '../data/context.ts'
-import { average, type Season } from '../data/model.ts'
-import { formatDuration, formatNumber, formatRecord, plural, roundLabel } from '../format.ts'
+import { formatDate, formatNumber, formatRecord, plural } from '../format.ts'
 import { useTitle } from '../hooks.ts'
-import { paths, type SeasonView } from '../router.ts'
+import { paths } from '../router.ts'
 
-const EXPLORE: { view: SeasonView; title: string; description: string; count: (season: Season) => string }[] = [
-  { view: 'standings', title: 'Standings', description: 'Records, streaks and form for every team.', count: (s) => plural(s.teams.length, 'team') },
-  { view: 'matches', title: 'Matches', description: 'Every result, week by week, with full box scores.', count: (s) => plural(s.matches.length, 'match', 'matches') },
-  { view: 'players', title: 'Players', description: 'Leaderboards by role, team, and every stat.', count: (s) => plural(s.players.filter((p) => p.games).length, 'player') },
-  { view: 'champions', title: 'Champions', description: 'Picks, bans, presence, and who plays what.', count: (s) => plural(s.summary.uniquePicks, 'champion') },
-  { view: 'teams', title: 'Teams', description: 'Rosters, objectives, and match history.', count: (s) => plural(s.teams.length, 'roster') },
-  { view: 'records', title: 'Records', description: 'The biggest games and best single performances.', count: () => 'Single-game highs' },
+const ABOUT = [
+  { title: 'Seasonal tournaments', body: 'Teams of five play a weekly tournament-code match through each season.' },
+  { title: 'Every rank welcome', body: 'New and veteran players alike: it\u2019s about playing together, not just climbing.' },
+  { title: 'Every game tracked', body: 'Results, box scores, and leaderboards for every season, all in one place.' },
 ]
 
 export function HomePage() {
   const { league, loading, error } = useData()
   useTitle(null)
+  const [now] = useState(() => Date.now())
   const latest = league?.latest ?? null
-  const leaders = latest?.teams.filter((team) => team.rank === 1 && team.games > 0) ?? []
-  const lastRound = latest?.rounds.findLast((round) => round.matches.some((match) => match.winner))
+  const leader = latest?.teams.find((team) => team.rank === 1 && team.games > 0) ?? null
+  const days = daysUntil(CLUB.nextSeason.start, now)
+  const startDate = CLUB.nextSeason.start ? parseClubDate(CLUB.nextSeason.start) : null
+  const events = upcomingEvents(CLUB.events, now)
 
   return (
     <div className="home">
@@ -33,104 +31,113 @@ export function HomePage() {
             Good games.<br />Great company.<br /><span className="gold-text">Let&apos;s queue.</span>
           </h1>
           <p className="hero-lede">
-            Standings, results, and stats for every Let&apos;s Queue Club season, straight from the club&apos;s records.
+            Let&apos;s Queue Club is a community League of Legends league. Form a team, play a season of weekly matches, and
+            see how you stack up.
           </p>
           <div className="hero-actions">
-            {latest ? (
-              <>
-                <a className="button primary" href={paths.season(latest.key)}>Explore {latest.label} <span aria-hidden="true">→</span></a>
-                <a className="button" href={paths.season(latest.key, 'standings')}>Standings</a>
-              </>
+            {CLUB.signupUrl ? (
+              <a className="button primary" href={CLUB.signupUrl} target="_blank" rel="noreferrer">
+                Sign up for {CLUB.nextSeason.label} <span aria-hidden="true">→</span>
+              </a>
             ) : (
-              <span className="button primary disabled" aria-disabled="true">{loading ? 'Loading seasons…' : 'No seasons yet'}</span>
+              <span className="button primary disabled" aria-disabled="true">Signups open soon</span>
             )}
+            {latest && <a className="button" href={paths.season(latest.key)}>{latest.label} stats</a>}
           </div>
         </div>
 
-        <div className="spotlight">
-          {latest ? (
+        <div className="countdown">
+          <span className="eyebrow">{CLUB.nextSeason.label}</span>
+          {days === null ? (
             <>
-              <div className="spotlight-head">
-                <span className="eyebrow">{latest.label}</span>
-                <span className="muted small">{latest.rounds.length ? `Through ${roundLabel(latest.rounds.at(-1)!.round).toLowerCase()}` : ''}</span>
-              </div>
-              {leaders.length > 0 ? (
-                <div className="spotlight-leaders">
-                  <span className="spotlight-crown">{leaders.length > 1 ? 'Tied for first' : 'First place'}</span>
-                  {leaders.slice(0, 2).map((team) => (
-                    <a key={team.id} className="spotlight-team" href={paths.team(latest.key, team.id)}>
-                      <TeamMark team={team} size={56} />
-                      <span>
-                        <span className="spotlight-name">{team.name}</span>
-                        <span className="spotlight-record">{formatRecord(team.wins, team.losses)} <FormDots form={team.form} /></span>
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              ) : (
-                <p className="muted">No results yet.</p>
-              )}
-              <dl className="spotlight-stats">
-                <div><dt>Matches</dt><dd>{formatNumber(latest.summary.matches)}</dd></div>
-                <div><dt>Kills / game</dt><dd>{formatNumber(average(latest.summary.kills), 1)}</dd></div>
-                <div><dt>Avg game</dt><dd>{formatDuration(average(latest.summary.duration))}</dd></div>
-              </dl>
+              <span className="countdown-value">TBA</span>
+              <span className="countdown-label">Start date to be announced</span>
             </>
           ) : (
-            <div className="spotlight-loading">
-              {error && !loading ? <p className="muted">The season data couldn&apos;t be loaded. {error}</p> : <div className="skeleton-stack"><span /><span /><span /></div>}
-            </div>
+            <>
+              <span className="countdown-value">{days === 0 ? 'Today' : formatNumber(days)}</span>
+              <span className="countdown-label">
+                {days === 0 ? 'The season starts today' : `${days === 1 ? 'day' : 'days'} until kickoff`}
+              </span>
+            </>
           )}
+          {startDate && days !== null && <span className="muted small">Starts {formatDate(startDate)}</span>}
         </div>
       </section>
 
-      {league && latest && (
-        <>
-          <Section title={`Explore ${latest.label}`}>
-            <div className="explore-grid">
-              {EXPLORE.map((item) => (
-                <a key={item.view} className="explore-card" href={paths.season(latest.key, item.view)}>
-                  <span className="explore-count">{item.count(latest)}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                  <span className="explore-arrow" aria-hidden="true">→</span>
-                </a>
-              ))}
-            </div>
-          </Section>
-
-          {lastRound && (
-            <Section
-              title={`Latest results · ${roundLabel(lastRound.round)}`}
-              action={<a className="text-link" href={paths.season(latest.key, 'matches')}>All matches →</a>}
-            >
-              <div className="match-grid">
-                {lastRound.matches.map((match) => <MatchCard key={match.id} match={match} />)}
-              </div>
-            </Section>
-          )}
-
-          <Section title="Seasons">
-            <div className="season-grid">
-              {league.seasons.map((season) => {
-                const first = season.teams.find((team) => team.rank === 1 && team.games > 0)
-                return (
-                  <a key={season.key} className="season-card" href={paths.season(season.key)}>
-                    <span className="season-number">{season.number ?? '?'}</span>
-                    <span className="season-card-body">
-                      <span className="season-card-title">{season.label}</span>
-                      <span className="muted small">
-                        {plural(season.teams.length, 'team')} · {plural(season.matches.length, 'match', 'matches')} · {plural(season.rounds.length, 'week')}
-                      </span>
-                      {first && <span className="season-card-leader">Leader: {first.name} ({formatRecord(first.wins, first.losses)})</span>}
+      <Section title="Coming up">
+        {events.length === 0 ? (
+          <div className="event-empty">
+            <p>No events scheduled yet. Check back soon for signups, drafts, and match days.</p>
+          </div>
+        ) : (
+          <ul className="event-list">
+            {events.map((event) => {
+              const date = parseClubDate(event.date)
+              return (
+                <li key={`${event.date}-${event.title}`} className="event">
+                  <span className="event-date">
+                    <span className="event-month">{date?.toLocaleDateString('en-US', { month: 'short' })}</span>
+                    <span className="event-day">{date?.getDate()}</span>
+                  </span>
+                  <span className="event-body">
+                    <span className="event-title">
+                      {event.url ? <a className="text-link" href={event.url} target="_blank" rel="noreferrer">{event.title}</a> : event.title}
                     </span>
-                  </a>
-                )
-              })}
+                    {event.description && <span className="muted small">{event.description}</span>}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </Section>
+
+      <Section title="About the club">
+        <div className="about-grid">
+          {ABOUT.map((item) => (
+            <div key={item.title} className="about-card">
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
             </div>
-          </Section>
-        </>
-      )}
+          ))}
+        </div>
+      </Section>
+
+      <Section title="Latest season">
+        {latest ? (
+          <a className="latest-season" href={paths.season(latest.key)}>
+            <span className="season-number">{latest.number ?? '?'}</span>
+            <span className="latest-season-body">
+              <span className="latest-season-title">{latest.label}</span>
+              <span className="muted small">
+                {plural(latest.teams.length, 'team')} · {plural(latest.matches.length, 'match', 'matches')} · {plural(latest.rounds.length, 'week')}
+              </span>
+              {leader && (
+                <span className="latest-season-leader">
+                  First place: <strong>{leader.name}</strong> ({formatRecord(leader.wins, leader.losses)})
+                </span>
+              )}
+            </span>
+            <span className="latest-season-cta">Explore <span aria-hidden="true">→</span></span>
+          </a>
+        ) : (
+          <p className="muted">{error && !loading ? `Season data couldn't be loaded. ${error}` : 'Loading seasons…'}</p>
+        )}
+        {league && league.seasons.length > 1 && (
+          <p className="season-archive">
+            Archive:{' '}
+            {league.seasons
+              .filter((season) => season !== latest)
+              .map((season, index) => (
+                <span key={season.key}>
+                  {index > 0 && ' · '}
+                  <a className="text-link" href={paths.season(season.key)}>{season.label}</a>
+                </span>
+              ))}
+          </p>
+        )}
+      </Section>
     </div>
   )
 }

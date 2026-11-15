@@ -38,7 +38,7 @@ export function PlayerDetail({ season, entry }: { season: Season; entry: PlayerS
     },
     { key: 'champion', label: 'Champion', render: (p) => <ChampionLink season={season.key} id={p.championId} size={26} />, sort: (p) => p.championId },
     { key: 'role', label: 'Role', render: (p) => positionLabel(p.position), sort: (p) => p.position },
-    { key: 'opponent', label: 'Opponent', render: (p) => <TeamLink team={p.side.opponent.team} size={22} />, sort: (p) => p.side.opponent.team.name },
+    { key: 'opponent', label: 'Opponent', render: (p) => <TeamLink team={p.side.opponent.team} />, sort: (p) => p.side.opponent.team.name },
     { key: 'kda', label: 'K / D / A', align: 'center', render: (p) => `${p.kills ?? '—'} / ${p.deaths ?? '—'} / ${p.assists ?? '—'}` },
     { key: 'cs', label: 'CS', align: 'end', render: (p) => formatNumber(p.cs), sort: (p) => p.cs },
     { key: 'damage', label: 'Damage', align: 'end', render: (p) => formatCompact(p.damage), sort: (p) => p.damage },
@@ -65,7 +65,7 @@ export function PlayerDetail({ season, entry }: { season: Season; entry: PlayerS
         {entry.teams.map((team, index) => (
           <span key={team.id}>
             {index > 0 && ' · '}
-            <TeamLink team={team} size={22} />
+            <TeamLink team={team} />
           </span>
         ))}
       </PageHeader>

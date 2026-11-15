@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { BarList, FormDots } from '../components/Charts.tsx'
 import { DataTable } from '../components/DataTable.tsx'
-import { ChampionLink, TeamLink, TeamMark } from '../components/Entities.tsx'
+import { ChampionLink, TeamLink } from '../components/Entities.tsx'
 import { Badge, PageHeader, Panel, Section, StatGrid, StatTile } from '../components/Layout.tsx'
 import { playerColumns, type PlayerRow } from '../columns.tsx'
 import { average, summarizeParticipations, type Season, type Team } from '../data/model.ts'
@@ -21,7 +21,7 @@ export function TeamDetail({ season, team }: { season: Season; team: Team }) {
       })),
     [team],
   )
-  const columns = playerColumns(season.key, { team: false })
+  const columns = playerColumns(season.key, { team: false, record: false, rateDigits: 1, championCount: 5, championSize: 30 })
   const [nameColumn] = columns
   columns[0] = {
     ...nameColumn,
@@ -43,7 +43,6 @@ export function TeamDetail({ season, team }: { season: Season; team: Team }) {
       <PageHeader
         eyebrow={`${season.label} · Rank ${team.rank} of ${season.teams.length}`}
         title={team.name}
-        media={<TeamMark team={team} size={72} />}
         aside={<FormDots form={team.form} limit={8} />}
       >
         {formatRecord(team.wins, team.losses)}
@@ -86,7 +85,8 @@ export function TeamDetail({ season, team }: { season: Season; team: Team }) {
                     {result === null ? '—' : result ? 'W' : 'L'}
                   </span>
                   <span className="history-opponent">
-                    <span className="muted small">{side.side === 'blue' ? 'vs' : '@'}</span> <TeamLink team={opponent.team} size={24} />
+                    <span className={`side-pip ${side.side}`} title={side.side === 'blue' ? 'Played on blue side' : 'Played on red side'} aria-hidden="true" />
+                    <span className="muted small">vs</span> <TeamLink team={opponent.team} />
                   </span>
                   <span className="history-score">
                     {match.forfeit ? 'Forfeit' : side.stats?.kills != null && opponent.stats?.kills != null ? `${side.stats.kills} – ${opponent.stats.kills}` : '—'}
