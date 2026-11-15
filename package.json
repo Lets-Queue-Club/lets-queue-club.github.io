@@ -11,6 +11,7 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "test:gas": "node --test tests/apps-script.test.mjs",
+    "test:site": "node --test tests/site-model.test.ts",
     "preview": "vite preview",
     "gas:push": "clasp push --force",
     "gas:deploy": "node scripts/deploy-apps-script.mjs",

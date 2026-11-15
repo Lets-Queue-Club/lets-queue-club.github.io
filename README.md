@@ -1,7 +1,8 @@
 # Let's Queue Club
 
-A React + TypeScript site built with Vite and hosted on GitHub Pages.
-The initial landing page introduces the club; standings and stats are coming later.
+A React + TypeScript site built with Vite and hosted on GitHub Pages. It shows
+standings, matches, teams, players, champions, and records for every Let's Queue
+Club season, read live from the club's Google Sheet.
 
 ## Local development
 
@@ -15,6 +16,26 @@ npm run dev
 - `npm run lint` checks the source with Oxlint.
 - `npm run build` type-checks with TypeScript and produces the static site in `dist/`.
 - `npm run preview` serves the production build locally after building.
+- `npm run test:site` tests the data model that links and aggregates the sheet tables.
+
+## Site structure
+
+- `src/data/` fetches the sheet's JSON endpoint ([source.ts](src/data/source.ts),
+  overridable with `VITE_DATA_URL`) and builds a linked, season-grouped model
+  ([model.ts](src/data/model.ts)). The model has no React or Vite dependencies so
+  it can be tested directly with Node.
+- **Seasons** aren't a column yet: a team's season comes from its ID prefix
+  (`S2-T01` → Season 2) and a match belongs to its teams' season. Teams without a
+  prefix land in an "Other" season. Game IDs starting with `FORFEIT-` are
+  forfeits: they count in standings but not in game stats.
+- Every view is grouped by season first: `#/seasons/<n>/` has overview,
+  standings, matches, teams, players, champions, and records pages, plus detail
+  pages for a match, team, player, or champion.
+- Responses are cached in `localStorage` and shown immediately on the next visit
+  while fresh data loads. Champion names and art come from Riot's public Data
+  Dragon CDN.
+- The theme lives in [src/index.css](src/index.css) (color tokens) and
+  [src/styles/](src/styles/).
 
 ## GitHub Pages strategy
 
@@ -29,7 +50,7 @@ HTML, CSS, and JavaScript, but cannot run Node.js or a backend.
   assets in HTML use `%BASE_URL%`, and future public assets in React should use
   `import.meta.env.BASE_URL`.
 - **Build and deploy:** [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
-  runs `npm ci`, lint, and the production build. Pushes to `main` upload only
+  runs `npm ci`, lint, the data-model tests, and the production build. Pushes to `main` upload only
   `dist/` as a Pages artifact and deploy using GitHub's official Pages actions.
   Pull requests run the same checks without deploying. Manual deployments are
   available from the Actions tab on `main`.
@@ -37,15 +58,15 @@ HTML, CSS, and JavaScript, but cannot run Node.js or a backend.
   `id-token: write`; it depends on a successful build and uses the `github-pages`
   environment. The artifact workflow bypasses Jekyll, so no `gh-pages` branch or
   `.nojekyll` file is necessary.
-- **Navigation:** The current site uses same-page anchors, not a client-side
-  router. Pages has no SPA rewrite rule: refreshing a nested path such as
-  `/standings` would return 404. If routes are added later, use hash routing
-  (`/#/standings`) or deliberately implement a static routing strategy.
-- **Data:** The intended data source is Google Sheets containing periodically
-  refreshed Riot API data. This app is read-only; data integration is not yet
-  implemented. Keep Riot credentials and private Google credentials in a
+- **Navigation:** Pages has no SPA rewrite rule, so refreshing a nested path
+  such as `/standings` would return 404. The site uses hash routing instead
+  (`/#/seasons/2/standings`), which keeps every deep link refreshable and
+  shareable.
+- **Data:** The site reads the Google Sheet through the public Apps Script web
+  app, which returns every structured table as JSON with cross-origin access
+  allowed and excludes private columns such as Discord names. The app is
+  read-only. Keep Riot credentials and private Google credentials in a
   separate updater/backend, never in the browser bundle or `VITE_*` variables.
-  Any future browser-readable data endpoint must allow cross-origin requests.
 - **Apps Script:** The Google Apps Script source lives in
   [apps-script/](apps-script/). Vite doesn't build it and it isn't deployed;
   it is pushed and deployed with clasp (`npm run gas:push`; see its README).
