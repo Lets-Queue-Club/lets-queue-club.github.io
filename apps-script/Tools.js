@@ -84,3 +84,26 @@ function toColumnLetter(index) {
   }
   return letters
 }
+
+/**
+ * Sends a Sheets API batchUpdate over REST. The Sheets advanced service drops
+ * newer request fields such as `appendCells.tableId`, so it can't append to
+ * structured tables. The request is atomic: every change applies or none do.
+ */
+function batchUpdateSpreadsheet(spreadsheetId, requests) {
+  const response = UrlFetchApp.fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}:batchUpdate`,
+    {
+      method: 'post',
+      contentType: 'application/json',
+      headers: { Authorization: `Bearer ${ScriptApp.getOAuthToken()}` },
+      payload: JSON.stringify({ requests }),
+      muteHttpExceptions: true,
+    },
+  )
+  const status = response.getResponseCode()
+  if (status !== 200) {
+    throw new Error(`Sheets batchUpdate failed with HTTP ${status}: ${response.getContentText()}`)
+  }
+  return JSON.parse(response.getContentText())
+}

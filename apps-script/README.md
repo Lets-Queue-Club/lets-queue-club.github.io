@@ -82,6 +82,9 @@ add a script property named `SPREADSHEET_ID` containing the sheet's ID (from its
   table's name, sheet, range, data row count, and column names and types,
   including allowed dropdown values. It never reads cell values. It also lists
   `sheetsWithoutTables` so data outside tables is easy to spot.
+  `batchUpdateSpreadsheet` calls the Sheets REST API directly, because the
+  Sheets advanced service drops `appendCells.tableId` and so can't append
+  rows to a table.
 
 ## Public endpoint
 

@@ -140,6 +140,14 @@ test('surfaces incomplete column metadata and missing API ranges as errors', () 
   assert.throws(rangeApp.run, /did not return every requested table range/)
 })
 
+function sheetsBatchUpdate(url, options) {
+  const match = /^https:\/\/sheets\.googleapis\.com\/v4\/spreadsheets\/([^:]+):batchUpdate$/.exec(url)
+  if (!match) return null
+  assert.equal(options.method, 'post')
+  assert.equal(options.headers.Authorization, 'Bearer token')
+  return { body: JSON.parse(options.payload), id: match[1] }
+}
+
 function importer(sheets, valueRanges, data, { status = 200 } = {}) {
   const calls = { batchUpdate: [], batchGet: [], fetched: [], lock: [] }
   const context = createContext({
@@ -153,8 +161,14 @@ function importer(sheets, valueRanges, data, { status = 200 } = {}) {
         releaseLock: () => calls.lock.push('release'),
       }),
     },
+    ScriptApp: { getOAuthToken: () => 'token' },
     UrlFetchApp: {
-      fetch: (url) => {
+      fetch: (url, options) => {
+        const update = sheetsBatchUpdate(url, options)
+        if (update) {
+          calls.batchUpdate.push(update)
+          return { getResponseCode: () => 200, getContentText: () => '{}' }
+        }
         calls.fetched.push(url)
         return {
           getResponseCode: () => status,
@@ -165,7 +179,6 @@ function importer(sheets, valueRanges, data, { status = 200 } = {}) {
     Sheets: {
       Spreadsheets: {
         get: () => ({ sheets }),
-        batchUpdate: (body, id) => calls.batchUpdate.push({ body: JSON.parse(JSON.stringify(body)), id }),
         Values: {
           batchGet: (id, options) => {
             calls.batchGet.push(options)
@@ -288,8 +301,14 @@ test('refreshChampions appends new champions, renames changed ones, and never de
     console: { log: () => {} },
     SpreadsheetApp: { getActiveSpreadsheet: () => ({ getId: () => 'test-spreadsheet' }) },
     LockService: { getScriptLock: () => ({ waitLock: () => {}, releaseLock: () => {} }) },
+    ScriptApp: { getOAuthToken: () => 'token' },
     UrlFetchApp: {
-      fetch: (url) => {
+      fetch: (url, options) => {
+        const update = sheetsBatchUpdate(url, options)
+        if (update) {
+          updates.push(update.body)
+          return { getResponseCode: () => 200, getContentText: () => '{}' }
+        }
         fetched.push(url)
         const body = url.endsWith('versions.json')
           ? ['99.1.1', '99.1.0']
@@ -300,7 +319,6 @@ test('refreshChampions appends new champions, renames changed ones, and never de
     Sheets: {
       Spreadsheets: {
         get: () => ({ sheets: [{ properties: { title: 'Champions Table', sheetId: 7 }, tables: [champions] }] }),
-        batchUpdate: (body) => updates.push(JSON.parse(JSON.stringify(body))),
         Values: {
           get: (id, range) => {
             assert.equal(range, "'Champions Table'!D2:E1000")

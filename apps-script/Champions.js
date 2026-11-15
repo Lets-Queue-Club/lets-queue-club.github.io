@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Refreshes the Champions table (ID -> Name) from Riot's Data Dragon.
  *
  * New champions are appended and renamed ones are updated in place. Rows are
@@ -76,7 +76,7 @@ function refreshChampions({ dryRun = false } = {}) {
       })
     }
     if (!dryRun && requests.length > 0) {
-      Sheets.Spreadsheets.batchUpdate({ requests }, spreadsheetId)
+      batchUpdateSpreadsheet(spreadsheetId, requests)
     }
 
     const summary = {
