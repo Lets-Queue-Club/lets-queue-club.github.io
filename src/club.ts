@@ -20,12 +20,21 @@ export interface ClubInfo {
   /** Where new players sign up; null hides the signup button. */
   signupUrl: string | null
   events: ClubEvent[]
+  /** How players reach the organizers, including for privacy requests. */
+  contact: {
+    email: string | null
+    discordUrl: string | null
+  }
+  /** ISO date the rules, privacy policy, and terms last changed. */
+  policiesUpdated: string
 }
 
 export const CLUB: ClubInfo = {
   nextSeason: { label: 'Season 3', start: null },
   signupUrl: null,
   events: [],
+  contact: { email: null, discordUrl: null },
+  policiesUpdated: '2026-11-15',
 }
 
 const DAY = 24 * 60 * 60 * 1000

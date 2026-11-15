@@ -33,7 +33,14 @@ npm run dev
   matches, teams (which include the standings), players, champions, and records
   pages, plus detail pages for a match, team, player, or champion.
 - The landing page's next-season date, signup link, and events come from
-  [src/club.ts](src/club.ts); edit that file to fill them in.
+  [src/club.ts](src/club.ts); edit that file to fill them in. It also holds the
+  organizer contact (email or Discord invite) and the "last updated" date shown
+  on the policy pages.
+- `#/rules`, `#/privacy`, and `#/terms` are the league rules, privacy policy,
+  and terms of use ([InfoPages.tsx](src/pages/InfoPages.tsx)), linked from the
+  footer. `public/rules/`, `public/privacy/`, and `public/terms/` are tiny
+  redirect pages, so clean URLs like `https://lets-queue-club.github.io/privacy`
+  work in forms that don't accept `#` links.
 - Responses are cached in `localStorage` and shown immediately on the next visit
   while fresh data loads. Champion names and art come from Riot's public Data
   Dragon CDN.
@@ -90,3 +97,38 @@ that is ever committed must be revoked, since it remains in git history.
 - [Vite: deploying to GitHub Pages](https://vite.dev/guide/static-deploy.html#github-pages)
 - [GitHub: Pages site types and static hosting](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
 - [GitHub: custom Pages workflows and required permissions](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
+
+## Riot API production key checklist
+
+Tournament codes need the Tournament API, which Riot only grants to
+**Production** keys. A Production key is approved per product, after review.
+
+1. **Site verification:** after registering the product in the
+   [Developer Portal](https://developer.riotgames.com/), copy the verification
+   code from the app's page into [public/riot.txt](public/riot.txt), replacing
+   the placeholder. Once deployed, it's served at
+   <https://lets-queue-club.github.io/riot.txt>.
+2. **Legal pages:** the privacy policy (`/privacy`), terms of use (`/terms`),
+   and Riot's "isn't endorsed by Riot Games" notice (site footer) are in place.
+   They're drafts written for this club; review them before applying, and set a
+   real contact in `CLUB.contact` so players can make privacy requests.
+3. **A finished product:** reviewers reject blank, placeholder, or "coming
+   soon" sites. Keep the public rules, schedule, rosters, results, and stats up,
+   and add the signup link (`CLUB.signupUrl`) when signups open.
+4. **Tournament policy:** keep the league free with no gambling, publish the
+   rules and win conditions, and meet Riot's minimum of 20 participants. If
+   entry fees are ever added, at least 70% must go to the prize pool.
+5. **Application:** describe the league and ask for Tournament API access
+   explicitly. Reviews can take months.
+6. **Callback URL:** registering a tournament provider needs an HTTPS URL that
+   accepts Riot's POSTed game results. GitHub Pages can't receive POSTs. An
+   Apps Script `doPost` web app might work, but Riot's callback client may not
+   follow its redirect, so plan for a small backend if it doesn't. You can
+   still poll results by tournament code without a callback.
+
+References: [Developer Portal docs](https://developer.riotgames.com/docs/portal),
+[General policies](https://developer.riotgames.com/policies/general),
+[LoL Tournament API](https://developer.riotgames.com/docs/lol#riot-games-api_tournament-api),
+and Riot developer-relations issues
+[#1172](https://github.com/RiotGames/developer-relations/issues/1172) and
+[#1190](https://github.com/RiotGames/developer-relations/issues/1190).

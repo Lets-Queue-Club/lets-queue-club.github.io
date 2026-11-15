@@ -6,6 +6,7 @@ import { formatTimeAgo } from './format.ts'
 import { ChampionDetail } from './pages/ChampionDetail.tsx'
 import { ChampionsPage } from './pages/ChampionsPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
+import { InfoPageView } from './pages/InfoPages.tsx'
 import { MatchDetail } from './pages/MatchDetail.tsx'
 import { MatchesPage } from './pages/MatchesPage.tsx'
 import { NotFound } from './pages/NotFound.tsx'
@@ -145,6 +146,11 @@ function Footer() {
         <Brand />
         <p className="muted small">Built by the club, for the love of the game. Stats come straight from the club&apos;s records.</p>
       </div>
+      <nav className="footer-links" aria-label="Club policies">
+        <a href={paths.info('rules')}>League Rules</a>
+        <a href={paths.info('privacy')}>Privacy Policy</a>
+        <a href={paths.info('terms')}>Terms of Use</a>
+      </nav>
       <p className="legal">
         Let&apos;s Queue Club isn&apos;t endorsed by Riot Games and doesn&apos;t reflect the views or opinions of Riot Games or anyone
         officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or
@@ -166,6 +172,7 @@ function Loading() {
 function Content({ route, league, season }: { route: Route; league: League | null; season: Season | null }) {
   const { loading, error, refresh } = useData()
   if (route.page === 'home') return <HomePage />
+  if (route.page === 'info') return <InfoPageView doc={route.doc} />
   if (route.page === 'notFound') return <NotFound />
   if (!league) {
     if (loading) return <Loading />

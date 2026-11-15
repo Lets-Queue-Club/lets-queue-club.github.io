@@ -3,6 +3,7 @@ import { test } from 'node:test'
 import { daysUntil } from '../src/club.ts'
 import { buildLeague } from '../src/data/model.ts'
 import type { Database } from '../src/data/types.ts'
+import { parseRoute } from '../src/router.ts'
 
 const database: Database = {
   Champions: [
@@ -104,4 +105,9 @@ test('counts whole days until a date-only season start in local time', () => {
   assert.equal(daysUntil('2026-01-11', now), 10)
   assert.equal(daysUntil('2025-12-31', now), null)
   assert.equal(daysUntil(null, now), null)
+})
+test('routes the club policy pages outside any season', () => {
+  assert.deepEqual(parseRoute('#/privacy'), { page: 'info', doc: 'privacy' })
+  assert.deepEqual(parseRoute('#/rules/'), { page: 'info', doc: 'rules' })
+  assert.deepEqual(parseRoute('#/privacy/extra'), { page: 'notFound' })
 })

@@ -11,8 +11,13 @@ export type SeasonView = (typeof SEASON_VIEWS)[number]
 const DETAIL_PAGES = { matches: 'match', teams: 'team', players: 'player', champions: 'champion' } as const
 type DetailPage = (typeof DETAIL_PAGES)[keyof typeof DETAIL_PAGES]
 
+/** Club pages that don't belong to a season, at `#/<doc>`. */
+export const INFO_PAGES = ['rules', 'privacy', 'terms'] as const
+export type InfoPage = (typeof INFO_PAGES)[number]
+
 export type Route =
   | { page: 'home' }
+  | { page: 'info'; doc: InfoPage }
   | { page: 'season'; season: string; view: SeasonView }
   | { page: DetailPage; season: string; id: string }
   | { page: 'notFound' }
@@ -30,6 +35,7 @@ export function parseRoute(hash: string): Route {
       }
     })
   if (parts.length === 0) return { page: 'home' }
+  if (parts.length === 1 && (INFO_PAGES as readonly string[]).includes(parts[0])) return { page: 'info', doc: parts[0] as InfoPage }
   if (parts[0] !== 'seasons' || !parts[1]) return { page: 'notFound' }
   const [, season, requested = 'overview', id, ...rest] = parts
   // Standings were folded into the teams page; keep old links working.
@@ -44,6 +50,7 @@ const segment = encodeURIComponent
 
 export const paths = {
   home: () => '#/',
+  info: (doc: InfoPage) => `#/${doc}`,
   season: (season: string, view: SeasonView = 'overview') =>
     view === 'overview' ? `#/seasons/${segment(season)}` : `#/seasons/${segment(season)}/${view}`,
   match: (season: string, id: string) => `#/seasons/${segment(season)}/matches/${segment(id)}`,

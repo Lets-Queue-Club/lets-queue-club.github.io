@@ -817,3 +817,102 @@
     display: none;
   }
 }
+
+/* Rules and policy pages */
+.info-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  align-items: start;
+  gap: 40px;
+}
+
+.prose {
+  max-width: 760px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.prose .lede {
+  color: var(--text-soft);
+  font-size: 1.05rem;
+}
+
+.prose h2 {
+  margin: 36px 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.prose p,
+.prose ul {
+  margin: 0 0 14px;
+}
+
+.prose ul {
+  padding-left: 22px;
+}
+
+.prose li + li {
+  margin-top: 6px;
+}
+
+.prose li::marker {
+  color: var(--gold-dark);
+}
+
+.prose a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--gold-bright);
+}
+
+.info-nav {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.info-nav a {
+  padding: 8px 12px;
+  border-radius: var(--radius-small);
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.info-nav a:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.info-nav a.active {
+  background: linear-gradient(90deg, rgb(200 170 110 / 16%), transparent);
+  color: var(--gold-bright);
+}
+
+@media (max-width: 900px) {
+  .info-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .info-nav {
+    position: static;
+    order: -1;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
