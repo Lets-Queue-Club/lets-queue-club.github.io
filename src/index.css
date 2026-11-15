@@ -1,29 +1,29 @@
 :root {
-  /* League client blue and Summoner's Rift forest green. */
-  --bg: #010a13;
+  /* Dark navy blue and deep crimson. */
+  --bg: #050912;
   --bg-blue: #0a1428;
-  --bg-forest: #0b2018;
-  --surface: #0b1a1f;
-  --surface-2: #0f2427;
-  --surface-3: #143033;
-  --surface-hover: #163236;
-  --line: rgb(200 170 110 / 16%);
-  --line-strong: rgb(200 170 110 / 34%);
-  --line-soft: rgb(240 230 210 / 7%);
+  --bg-crimson: #140d15;
+  --surface: #0e1420;
+  --surface-2: #131a28;
+  --surface-3: #192233;
+  --surface-hover: #1e2839;
+  --line: rgb(184 194 204 / 16%);
+  --line-strong: rgb(184 194 204 / 34%);
+  --line-soft: rgb(230 236 242 / 7%);
 
-  /* Gold trim. */
-  --gold: #c8aa6e;
-  --gold-bright: #f0d696;
-  --gold-hover: #e3c68a;
-  --gold-deep: #c89b3c;
-  --gold-dark: #785a28;
-  --gold-shadow: #463714;
-  --gold-gradient: linear-gradient(180deg, #f0d696 0%, #c8aa6e 45%, #a07b3c 100%);
+  /* Polished silver trim. */
+  --silver: #b8c2cc;
+  --silver-bright: #eef2f6;
+  --silver-hover: #d6dde4;
+  --silver-deep: #9aa6b2;
+  --silver-dark: #5b6570;
+  --silver-shadow: #2a3038;
+  --silver-gradient: linear-gradient(180deg, #f6f8fb 0%, #b8c2cc 45%, #6f7a86 100%);
 
-  --text: #f0e6d2;
-  --text-soft: #cdbe91;
-  --muted: #a09b8c;
-  --faint: #6b6a62;
+  --text: #edf0f4;
+  --text-soft: #c4cbd3;
+  --muted: #9aa1ab;
+  --faint: #656b75;
 
   --win: #0ac8b9;
   --loss: #e84057;
@@ -65,8 +65,8 @@ body {
   min-height: 100vh;
   background:
     radial-gradient(1200px 600px at 85% -10%, rgb(10 20 40 / 95%), transparent 70%),
-    radial-gradient(900px 700px at -10% 10%, rgb(16 52 36 / 55%), transparent 70%),
-    linear-gradient(180deg, var(--bg-blue) 0%, var(--bg) 45%, #03110c 100%);
+    radial-gradient(900px 700px at -10% 10%, rgb(28 14 24 / 35%), transparent 70%),
+    linear-gradient(180deg, var(--bg-blue) 0%, var(--bg) 45%, #0a0910 100%);
   background-attachment: fixed;
 }
 
@@ -102,13 +102,13 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid var(--gold-bright);
+  outline: 2px solid var(--silver-bright);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 ::selection {
-  background: var(--gold-dark);
+  background: var(--silver-dark);
   color: var(--text);
 }
 
@@ -142,15 +142,15 @@ img {
   font-weight: 600;
 }
 
-.gold-text {
-  background: var(--gold-gradient);
+.silver-text {
+  background: var(--silver-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .eyebrow {
-  color: var(--gold);
+  color: var(--silver);
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.16em;

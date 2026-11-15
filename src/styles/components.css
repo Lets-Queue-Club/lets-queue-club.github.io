@@ -9,7 +9,7 @@
 }
 
 a.entity:hover .entity-name {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .entity-name {
@@ -31,10 +31,10 @@ a.entity:hover .entity-name {
   flex: none;
   place-items: center;
   overflow: hidden;
-  border: 1px solid var(--gold-dark);
+  border: 1px solid var(--silver-dark);
   border-radius: 50%;
   background: var(--surface-3);
-  color: var(--gold);
+  color: var(--silver);
   font-size: 0.75rem;
   font-weight: 800;
 }
@@ -47,8 +47,8 @@ a.entity:hover .entity-name {
 }
 
 .champion-icon.header-icon {
-  border: 2px solid var(--gold);
-  box-shadow: 0 0 0 4px rgb(200 170 110 / 12%), 0 10px 30px rgb(0 0 0 / 50%);
+  border: 2px solid var(--silver);
+  box-shadow: 0 0 0 4px rgb(184 194 204 / 12%), 0 10px 30px rgb(0 0 0 / 50%);
 }
 
 .icon-row {
@@ -81,7 +81,7 @@ a.entity:hover .entity-name {
   white-space: nowrap;
 }
 
-.badge-gold { color: var(--gold); background: rgb(200 170 110 / 10%); }
+.badge-silver { color: var(--silver); background: rgb(184 194 204 / 10%); }
 .badge-win { color: var(--win); background: rgb(10 200 185 / 10%); }
 .badge-loss { color: var(--loss); background: rgb(232 64 87 / 10%); }
 .badge-muted { color: var(--muted); background: rgb(160 155 140 / 8%); border-color: rgb(160 155 140 / 35%); }
@@ -101,7 +101,7 @@ a.entity:hover .entity-name {
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(180deg, rgb(15 36 39 / 70%), rgb(8 20 24 / 85%));
+  background: linear-gradient(180deg, rgb(19 26 40 / 70%), rgb(10 14 22 / 85%));
 }
 
 .panel .table-scroll {
@@ -122,7 +122,7 @@ a.entity:hover .entity-name {
   top: 0;
   padding: 11px 12px;
   border-bottom: 1px solid var(--line-strong);
-  background: #0b1c20;
+  background: #0f1522;
   color: var(--muted);
   font-size: 0.7rem;
   font-weight: 700;
@@ -142,7 +142,7 @@ a.entity:hover .entity-name {
 }
 
 .data-table tbody tr:hover {
-  background: rgb(200 170 110 / 6%);
+  background: rgb(184 194 204 / 6%);
 }
 
 .data-table tbody tr:last-child td {
@@ -177,12 +177,12 @@ a.entity:hover .entity-name {
 }
 
 .row-leader .rank {
-  background: var(--gold-gradient);
-  color: #1e1406;
+  background: var(--silver-gradient);
+  color: #0b0f16;
 }
 
 .row-leader td:first-child {
-  box-shadow: inset 3px 0 0 var(--gold);
+  box-shadow: inset 3px 0 0 var(--silver);
 }
 
 .sort-button {
@@ -201,7 +201,7 @@ a.entity:hover .entity-name {
 
 .sort-button:hover,
 .sort-button.active {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .sort-arrow {
@@ -211,7 +211,7 @@ a.entity:hover .entity-name {
 
 .sort-button.active .sort-arrow {
   opacity: 1;
-  color: var(--gold);
+  color: var(--silver);
 }
 
 .table-empty {
@@ -242,7 +242,7 @@ a.entity:hover .entity-name {
 .mini-bar span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+  background: linear-gradient(90deg, var(--silver-dark), var(--silver));
 }
 
 /* Charts */
@@ -277,7 +277,7 @@ a.entity:hover .entity-name {
   display: block;
   height: 100%;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--gold-dark), var(--gold) 80%, var(--gold-bright));
+  background: linear-gradient(90deg, var(--silver-dark), var(--silver) 80%, var(--silver-bright));
 }
 
 .bar-list-value {
@@ -386,13 +386,13 @@ a.entity:hover .entity-name {
 .column-fill {
   width: min(100%, 56px);
   border-radius: 6px 6px 2px 2px;
-  background: linear-gradient(180deg, var(--gold-bright) 0%, var(--gold) 25%, rgb(120 90 40 / 60%) 100%);
-  box-shadow: 0 0 18px rgb(200 170 110 / 15%);
+  background: linear-gradient(180deg, var(--silver-bright) 0%, var(--silver) 25%, rgb(91 101 112 / 60%) 100%);
+  box-shadow: 0 0 18px rgb(184 194 204 / 15%);
   transition: height 300ms ease;
 }
 
 .column:hover .column-fill {
-  background: linear-gradient(180deg, #fff1c9 0%, var(--gold-bright) 30%, var(--gold-dark) 100%);
+  background: linear-gradient(180deg, #ffffff 0%, var(--silver-bright) 30%, var(--silver-dark) 100%);
 }
 
 .column-label {
@@ -451,7 +451,7 @@ a.entity:hover .entity-name {
 }
 
 .winrate-fill.gold {
-  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+  background: linear-gradient(90deg, var(--silver-dark), var(--silver));
 }
 
 .winrate-track:has(.gold) {
@@ -518,8 +518,8 @@ a.entity:hover .entity-name {
 }
 
 .match-card:hover {
-  border-color: var(--gold);
-  box-shadow: 0 10px 28px rgb(0 0 0 / 35%), 0 0 0 1px rgb(200 170 110 / 15%);
+  border-color: var(--silver);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 35%), 0 0 0 1px rgb(184 194 204 / 15%);
   transform: translateY(-2px);
 }
 
@@ -566,8 +566,8 @@ a.entity:hover .entity-name {
   flex: none;
   padding: 1px 6px;
   border-radius: 4px;
-  background: var(--gold-gradient);
-  color: #1e1406;
+  background: var(--silver-gradient);
+  color: #0b0f16;
   font-size: 0.62rem;
   font-weight: 800;
 }
@@ -581,7 +581,7 @@ a.entity:hover .entity-name {
 }
 
 .match-side.won .match-kills {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .match-meta {
@@ -596,12 +596,12 @@ a.entity:hover .entity-name {
 }
 
 .match-details {
-  color: var(--gold-dark);
+  color: var(--silver-dark);
   font-weight: 600;
 }
 
 .match-card:hover .match-details {
-  color: var(--gold);
+  color: var(--silver);
 }
 
 .match-score-divider {

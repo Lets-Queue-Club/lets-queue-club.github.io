@@ -28,7 +28,7 @@ export function HomePage() {
         <div className="hero-copy">
           <p className="eyebrow">Community League of Legends</p>
           <h1 className="hero-title">
-            Good games.<br />Great company.<br /><span className="gold-text">Let&apos;s queue.</span>
+            Good games.<br />Great company.<br /><span className="silver-text">Let&apos;s queue.</span>
           </h1>
           <p className="hero-lede">
             Let&apos;s Queue Club is a community League of Legends league. Form a team, play a season of weekly matches, and

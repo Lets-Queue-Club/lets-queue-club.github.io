@@ -38,9 +38,9 @@
   border: 1px solid var(--line-strong);
   border-radius: 14px;
   background:
-    radial-gradient(320px 200px at 100% 0%, rgb(200 170 110 / 16%), transparent 70%),
-    radial-gradient(360px 260px at 0% 100%, rgb(22 72 50 / 55%), transparent 70%),
-    linear-gradient(160deg, #0d2a2a, #08141c);
+    radial-gradient(320px 200px at 100% 0%, rgb(184 194 204 / 16%), transparent 70%),
+    radial-gradient(360px 260px at 0% 100%, rgb(30 15 26 / 35%), transparent 70%),
+    linear-gradient(160deg, #13101a, #080c16);
   box-shadow: var(--shadow);
   text-align: center;
 }
@@ -50,11 +50,11 @@
   position: absolute;
   inset: 0 0 auto;
   height: 2px;
-  background: var(--gold-gradient);
+  background: var(--silver-gradient);
 }
 
 .countdown-value {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
   font-family: var(--font-display);
   font-size: clamp(3.2rem, 8vw, 5rem);
   font-weight: 800;
@@ -99,13 +99,13 @@
   place-items: center;
   width: 56px;
   padding: 6px 0;
-  border: 1px solid var(--gold-dark);
+  border: 1px solid var(--silver-dark);
   border-radius: 8px;
   background: rgb(0 0 0 / 25%);
 }
 
 .event-month {
-  color: var(--gold);
+  color: var(--silver);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -137,7 +137,7 @@
 .about-card {
   padding: 20px 22px;
   border: 1px solid var(--line);
-  border-top: 2px solid var(--gold-dark);
+  border-top: 2px solid var(--silver-dark);
   border-radius: var(--radius);
   background: linear-gradient(160deg, var(--surface-2), var(--surface));
 }
@@ -159,12 +159,12 @@
   padding: 18px 22px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(120deg, #10302a, var(--surface) 70%);
+  background: linear-gradient(120deg, #14111b, var(--surface) 70%);
   transition: border-color 150ms ease;
 }
 
 .latest-season:hover {
-  border-color: var(--gold);
+  border-color: var(--silver);
 }
 
 .latest-season-body {
@@ -185,18 +185,18 @@
 }
 
 .latest-season-leader strong {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .latest-season-cta {
   flex: none;
-  color: var(--gold);
+  color: var(--silver);
   font-weight: 700;
   transition: color 150ms ease;
 }
 
 .latest-season:hover .latest-season-cta {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .season-archive {
@@ -218,12 +218,12 @@
   padding: 16px 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(120deg, #10302a, var(--surface) 70%);
+  background: linear-gradient(120deg, #14111b, var(--surface) 70%);
   transition: border-color 150ms ease;
 }
 
 .season-card:hover {
-  border-color: var(--gold);
+  border-color: var(--silver);
 }
 
 .season-number {
@@ -232,10 +232,10 @@
   place-items: center;
   width: 52px;
   height: 52px;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--silver);
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #1c3a40, #071216);
-  color: var(--gold-bright);
+  background: radial-gradient(circle at 30% 30%, #2a3346, #070a12);
+  color: var(--silver-bright);
   font-family: var(--font-display);
   font-size: 1.4rem;
   font-weight: 800;
@@ -280,11 +280,11 @@
 }
 
 .mini-standings li:hover {
-  background: rgb(200 170 110 / 6%);
+  background: rgb(184 194 204 / 6%);
 }
 
 .mini-standings li:first-child .mini-rank {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .mini-rank {
@@ -330,7 +330,7 @@
 }
 
 .leader-board li.first .entity-name {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .leader-value {
@@ -339,7 +339,7 @@
 }
 
 .leader-board li.first .leader-value {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 /* Match detail */
@@ -354,7 +354,7 @@
   border-radius: 14px;
   background:
     linear-gradient(90deg, rgb(59 143 217 / 16%), transparent 40%, transparent 60%, rgb(232 64 87 / 16%)),
-    linear-gradient(160deg, var(--surface-2), #08141c);
+    linear-gradient(160deg, var(--surface-2), #080c16);
 }
 
 .score-side {
@@ -407,7 +407,7 @@
 }
 
 .scoreboard-score .lead {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .match-overview {
@@ -509,7 +509,7 @@
 }
 
 .team-card:hover {
-  border-color: var(--gold);
+  border-color: var(--silver);
   box-shadow: 0 12px 30px rgb(0 0 0 / 35%);
   transform: translateY(-2px);
 }
@@ -529,7 +529,7 @@
 }
 
 .team-card:hover .team-card-name {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .team-card-meta {
@@ -542,7 +542,7 @@
 }
 
 .team-card-rank {
-  color: var(--gold);
+  color: var(--silver);
 }
 
 .team-card-body {
@@ -674,7 +674,7 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgb(1 10 19 / 95%) 0%, rgb(1 10 19 / 70%) 45%, rgb(1 10 19 / 25%) 100%),
+    linear-gradient(90deg, rgb(5 9 18 / 95%) 0%, rgb(5 9 18 / 70%) 45%, rgb(5 9 18 / 25%) 100%),
     linear-gradient(0deg, var(--bg) 0%, transparent 50%);
 }
 
@@ -707,7 +707,7 @@
 
 .record-card h3 {
   margin-bottom: 12px;
-  color: var(--gold);
+  color: var(--silver);
   font-size: 0.76rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -726,12 +726,12 @@
   font-size: 2.2rem;
   font-weight: 800;
   line-height: 1;
-  color: var(--gold-bright);
+  color: var(--silver-bright);
   font-variant-numeric: tabular-nums;
 }
 
 .record-value:hover {
-  color: #fff1c9;
+  color: #ffffff;
 }
 
 .record-holder {
@@ -779,7 +779,7 @@
 }
 
 .record-rest-value:hover {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 @media (max-width: 900px) {
@@ -841,7 +841,7 @@
   margin: 36px 0 10px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--line);
-  color: var(--gold);
+  color: var(--silver);
   font-family: var(--font-display);
   font-size: 1.1rem;
   letter-spacing: 0.06em;
@@ -862,17 +862,17 @@
 }
 
 .prose li::marker {
-  color: var(--gold-dark);
+  color: var(--silver-dark);
 }
 
 .prose a {
-  color: var(--gold);
+  color: var(--silver);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .prose a:hover {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .info-nav {
@@ -899,8 +899,8 @@
 }
 
 .info-nav a.active {
-  background: linear-gradient(90deg, rgb(200 170 110 / 16%), transparent);
-  color: var(--gold-bright);
+  background: linear-gradient(90deg, rgb(184 194 204 / 16%), transparent);
+  color: var(--silver-bright);
 }
 
 @media (max-width: 900px) {

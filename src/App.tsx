@@ -56,12 +56,7 @@ function seasonSwitchTarget(route: Route, season: Season): string {
 function Brand() {
   return (
     <a className="brand" href={paths.home()} aria-label="Let's Queue Club home">
-      <span className="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 32 32">
-          <path d="M16 2 29 9.5v13L16 30 3 22.5v-13Z" />
-          <text x="16" y="21.5" textAnchor="middle">Q</text>
-        </svg>
-      </span>
+      <img className="brand-mark" src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width={36} height={36} />
       <span className="brand-text">
         Let&apos;s Queue <span>Club</span>
       </span>

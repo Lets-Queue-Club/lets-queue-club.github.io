@@ -100,6 +100,6 @@ export function EmptyState({ title, children }: { title: ReactNode; children?: R
   )
 }
 
-export function Badge({ children, tone = 'gold' }: { children: ReactNode; tone?: 'gold' | 'win' | 'loss' | 'muted' | 'blue' | 'red' }) {
+export function Badge({ children, tone = 'silver' }: { children: ReactNode; tone?: 'silver' | 'win' | 'loss' | 'muted' | 'blue' | 'red' }) {
   return <span className={`badge badge-${tone}`}>{children}</span>
 }

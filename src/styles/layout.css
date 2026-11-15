@@ -19,10 +19,10 @@ main {
   left: 10px;
   z-index: 100;
   padding: 10px 16px;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--silver);
   border-radius: var(--radius-small);
   background: var(--bg-blue);
-  color: var(--gold-bright);
+  color: var(--silver-bright);
   cursor: pointer;
   transform: translateY(-160%);
   transition: transform 150ms ease;
@@ -37,7 +37,7 @@ main {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: linear-gradient(180deg, rgb(1 10 19 / 96%), rgb(5 18 24 / 92%));
+  background: linear-gradient(180deg, rgb(5 9 18 / 96%), rgb(8 12 22 / 92%));
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(12px);
 }
@@ -47,7 +47,7 @@ main {
   position: absolute;
   inset: auto 0 -1px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-dark) 20%, var(--gold) 50%, var(--gold-dark) 80%, transparent);
+  background: linear-gradient(90deg, transparent, var(--silver-dark) 20%, var(--silver) 50%, var(--silver-dark) 80%, transparent);
   opacity: 0.7;
 }
 
@@ -74,29 +74,14 @@ main {
 }
 
 .brand-text span {
-  color: var(--gold);
+  color: var(--silver);
 }
 
 .brand-mark {
-  display: inline-grid;
+  display: block;
+  flex: none;
   width: 36px;
   height: 36px;
-}
-
-.brand-mark svg {
-  width: 100%;
-  height: 100%;
-}
-
-.brand-mark path {
-  fill: #0a1428;
-  stroke: var(--gold);
-  stroke-width: 1.6;
-}
-
-.brand-mark text {
-  fill: var(--gold-bright);
-  font: 800 14px var(--font-display);
 }
 
 .header-tools {
@@ -136,7 +121,7 @@ main {
 }
 
 .site-nav a.active {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .site-nav a.active::after {
@@ -146,8 +131,8 @@ main {
   right: 14px;
   bottom: 0;
   height: 2px;
-  background: var(--gold-gradient);
-  box-shadow: 0 0 12px rgb(200 170 110 / 60%);
+  background: var(--silver-gradient);
+  box-shadow: 0 0 12px rgb(184 194 204 / 60%);
 }
 
 .data-status {
@@ -165,7 +150,7 @@ main {
 }
 
 .data-status:hover:not(:disabled) {
-  border-color: var(--gold);
+  border-color: var(--silver);
   color: var(--text);
 }
 
@@ -182,8 +167,8 @@ main {
 }
 
 .data-status.loading .data-status-dot {
-  background: var(--gold);
-  box-shadow: 0 0 8px var(--gold);
+  background: var(--silver);
+  box-shadow: 0 0 8px var(--silver);
   animation: pulse 1s ease-in-out infinite alternate;
 }
 
@@ -201,7 +186,7 @@ main {
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--line);
-  background: linear-gradient(180deg, rgb(3 17 12 / 60%), rgb(1 10 19 / 95%));
+  background: linear-gradient(180deg, rgb(13 9 16 / 60%), rgb(5 9 18 / 95%));
   padding: 36px max(20px, calc((100% - var(--content)) / 2)) 44px;
   display: grid;
   gap: 20px;
@@ -230,7 +215,7 @@ main {
 }
 
 .footer-links a:hover {
-  color: var(--gold);
+  color: var(--silver);
 }
 
 .legal {
@@ -247,9 +232,9 @@ main {
   gap: 8px;
   min-height: 44px;
   padding: 0 22px;
-  border: 1px solid var(--gold-dark);
+  border: 1px solid var(--silver-dark);
   border-radius: var(--radius-small);
-  background: linear-gradient(180deg, rgb(30 40 45 / 90%), rgb(10 20 25 / 90%));
+  background: linear-gradient(180deg, rgb(32 38 50 / 90%), rgb(12 16 26 / 90%));
   color: var(--text-soft);
   font-size: 0.82rem;
   font-weight: 700;
@@ -260,21 +245,21 @@ main {
 }
 
 .button:hover {
-  border-color: var(--gold);
-  color: var(--gold-bright);
-  box-shadow: 0 0 18px rgb(200 170 110 / 18%);
+  border-color: var(--silver);
+  color: var(--silver-bright);
+  box-shadow: 0 0 18px rgb(184 194 204 / 18%);
 }
 
 .button.primary {
-  border-color: var(--gold);
+  border-color: var(--silver);
   background: linear-gradient(180deg, #1e2328 0%, #0a1428 100%);
-  color: var(--gold-bright);
-  box-shadow: inset 0 0 0 1px rgb(240 214 150 / 12%), 0 0 0 1px rgb(0 0 0 / 50%);
+  color: var(--silver-bright);
+  box-shadow: inset 0 0 0 1px rgb(238 242 246 / 12%), 0 0 0 1px rgb(0 0 0 / 50%);
 }
 
 .button.primary:hover {
-  border-color: var(--gold-bright);
-  box-shadow: inset 0 0 14px rgb(200 170 110 / 25%), 0 0 22px rgb(200 170 110 / 28%);
+  border-color: var(--silver-bright);
+  box-shadow: inset 0 0 14px rgb(184 194 204 / 25%), 0 0 22px rgb(184 194 204 / 28%);
   transform: translateY(-1px);
 }
 
@@ -284,14 +269,14 @@ main {
 }
 
 .text-link {
-  color: var(--gold);
+  color: var(--silver);
   font-size: 0.82rem;
   font-weight: 600;
   white-space: nowrap;
 }
 
 .text-link:hover {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .select {
@@ -318,19 +303,19 @@ main {
   top: 50%;
   width: 7px;
   height: 7px;
-  border-right: 2px solid var(--gold);
-  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid var(--silver);
+  border-bottom: 2px solid var(--silver);
   transform: translateY(-70%) rotate(45deg);
   pointer-events: none;
 }
 
 .select select:hover {
-  border-color: var(--gold);
+  border-color: var(--silver);
 }
 
 .season-select select {
   font-weight: 700;
-  color: var(--gold-bright);
+  color: var(--silver-bright);
   letter-spacing: 0.04em;
 }
 
@@ -347,15 +332,15 @@ main {
 }
 
 .search-input:focus-within {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgb(200 170 110 / 12%);
+  border-color: var(--silver);
+  box-shadow: 0 0 0 3px rgb(184 194 204 / 12%);
 }
 
 .search-input svg {
   width: 16px;
   height: 16px;
   fill: none;
-  stroke: var(--gold);
+  stroke: var(--silver);
   stroke-width: 2;
   stroke-linecap: round;
 }
@@ -398,9 +383,9 @@ main {
 }
 
 .segmented button.active {
-  background: linear-gradient(180deg, rgb(200 170 110 / 26%), rgb(120 90 40 / 22%));
-  color: var(--gold-bright);
-  box-shadow: inset 0 0 0 1px var(--gold-dark);
+  background: linear-gradient(180deg, rgb(184 194 204 / 26%), rgb(91 101 112 / 22%));
+  color: var(--silver-bright);
+  box-shadow: inset 0 0 0 1px var(--silver-dark);
 }
 
 .check {
@@ -413,7 +398,7 @@ main {
 }
 
 .check input {
-  accent-color: var(--gold);
+  accent-color: var(--silver);
   width: 16px;
   height: 16px;
 }
@@ -482,11 +467,11 @@ main {
 }
 
 .breadcrumbs a {
-  color: var(--gold);
+  color: var(--silver);
 }
 
 .breadcrumbs a:hover {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .section {
@@ -517,7 +502,7 @@ main {
   padding: 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 60%, #08161a 100%);
+  background: linear-gradient(160deg, var(--surface-2) 0%, var(--surface) 60%, #0a0e18 100%);
 }
 
 .panel-head {
@@ -530,7 +515,7 @@ main {
 }
 
 .panel-head h3 {
-  color: var(--gold);
+  color: var(--silver);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -574,8 +559,8 @@ main {
 .stat-tile.highlight {
   border-color: var(--line-strong);
   background:
-    radial-gradient(160px 90px at 100% 0%, rgb(200 170 110 / 18%), transparent),
-    linear-gradient(160deg, #13302a, var(--surface));
+    radial-gradient(160px 90px at 100% 0%, rgb(184 194 204 / 18%), transparent),
+    linear-gradient(160deg, #14111b, var(--surface));
 }
 
 .stat-label {
@@ -596,7 +581,7 @@ main {
 }
 
 .stat-tile.highlight .stat-value {
-  color: var(--gold-bright);
+  color: var(--silver-bright);
 }
 
 .stat-detail {
@@ -622,7 +607,7 @@ main {
 }
 
 .empty-mark {
-  color: var(--gold);
+  color: var(--silver);
   font-size: 2rem;
 }
 
@@ -639,7 +624,7 @@ main {
   width: 26px;
   height: 26px;
   border: 2px solid var(--line-strong);
-  border-top-color: var(--gold);
+  border-top-color: var(--silver);
   border-radius: 50%;
   animation: spin 800ms linear infinite;
 }
