@@ -223,7 +223,7 @@ test('importer appends only new rows, mapped to live columns by name', () => {
     ],
     Champions: [{ ID: 1, Name: 'Annie' }],
   })
-  const app = importer([{ properties: { title: 'Data' }, tables: [players, champions] }], [
+  const app = importer([{ properties: { title: 'Data', sheetId: 5 }, tables: [players, champions] }], [
     { values: [['Tagline', 'Discord', 'PUUID', 'Game Name'], ['', 'me', 'FAKE-1', 'One'], []] },
     { values: [['ID', 'Name'], [1, 'Annie']] },
   ], data)
@@ -240,6 +240,7 @@ test('importer appends only new rows, mapped to live columns by name', () => {
   const { requests } = app.calls.batchUpdate[0].body
   assert.deepEqual(requests, [{
     appendCells: {
+      sheetId: 5,
       tableId: 'players-table',
       fields: 'userEnteredValue',
       rows: [{
@@ -349,6 +350,7 @@ test('refreshChampions appends new champions, renames changed ones, and never de
     },
     {
       appendCells: {
+        sheetId: 7,
         tableId: 'champions-table',
         rows: [{ values: [
           { userEnteredValue: { stringValue: 'Mel' } },

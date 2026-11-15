@@ -64,6 +64,8 @@ function refreshChampions({ dryRun = false } = {}) {
     if (added.length > 0) {
       requests.push({
         appendCells: {
+          // The API rejects appendCells without a valid sheetId, even with tableId.
+          sheetId: table.sheetId,
           tableId: table.tableId,
           rows: added.map((champion) => {
             const cells = Array.from({ length: width }, () => ({}))

@@ -48,6 +48,8 @@ function importSeasonData(url, { dryRun = true } = {}) {
       .filter((table) => table.rows.length > 0)
       .map((table) => ({
         appendCells: {
+          // The API rejects appendCells without a valid sheetId, even with tableId.
+          sheetId: table.sheetId,
           tableId: table.tableId,
           rows: table.rows,
           fields: 'userEnteredValue',
@@ -85,11 +87,11 @@ function fetchSeasonData(url) {
 
 function planSeasonImport(spreadsheetId, data) {
   const { sheets = [] } = Sheets.Spreadsheets.get(spreadsheetId, {
-    fields: 'sheets(properties(title),tables(tableId,name,range,columnProperties))',
+    fields: 'sheets(properties(title,sheetId),tables(tableId,name,range,columnProperties))',
   })
   const liveTables = new Map(
     sheets.flatMap((sheet) =>
-      (sheet.tables ?? []).map((table) => [table.name, { ...table, sheetTitle: sheet.properties.title }]),
+      (sheet.tables ?? []).map((table) => [table.name, { ...table, sheetTitle: sheet.properties.title, sheetId: sheet.properties.sheetId }]),
     ),
   )
 
@@ -145,6 +147,7 @@ function planSeasonImport(spreadsheetId, data) {
     return {
       name: target.name,
       tableId: target.live.tableId,
+      sheetId: target.live.sheetId,
       imported: target.rows.length,
       added: newRows.length,
       skipped: target.rows.length - newRows.length,

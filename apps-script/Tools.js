@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Describes every structured table in the spreadsheet: its name, location,
  * row count, and typed columns. Cell values are never included.
  *
@@ -86,9 +86,9 @@ function toColumnLetter(index) {
 }
 
 /**
- * Sends a Sheets API batchUpdate over REST. The Sheets advanced service drops
- * newer request fields such as `appendCells.tableId`, so it can't append to
- * structured tables. The request is atomic: every change applies or none do.
+ * Sends a Sheets API batchUpdate over REST, so newer request fields such as
+ * `appendCells.tableId` reach the API unchanged. The request is atomic:
+ * every change applies or none do.
  */
 function batchUpdateSpreadsheet(spreadsheetId, requests) {
   const response = UrlFetchApp.fetch(
